@@ -8,4 +8,23 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="tripManagerStyle">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">italic|bold</item>
+    </style>
+
+    <style name="stringStyle">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NameButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">#87CEEB</item>
+    </style>
+
+    <style name="SeekBarTextAppearance" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
 </resources>

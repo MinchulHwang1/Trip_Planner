@@ -2,5 +2,46 @@
     <string name="app_name">Assignment2</string>
     <string name="Open">Open</string>
     <string name="Close">Close</string>
-
+    <string name="tripManager">Trip Manager</string>
+    <string name="inputNameString">Insert your name</string>
+    <string name="buttonNameString">Make a Plan!</string>
+    <string name="dayInputString">Choose your travel date</string>
+    <string name="fromString">From : </string>
+    <string name="toString">To : </string>
+    <string name="selectString">Select</string>
+    <string name="helloString">Hello </string>
+    <string name="destinationString">Where do you want to go?</string>
+    <string name="prevString">Prev</string>
+    <string name="nextString">Next</string>
+    <string name="tripContentsString">Your Travel plan is...</string>
+    <string name="locationString">Destination : </string>
+    <string name="peopleString">How many people join you? </string>
+    <string name="zeroString">0</string>
+    <string name="oneString">1</string>
+    <string name="twoString">2</string>
+    <string name="threeString">3</string>
+    <string name="totalString">Total : </string>
+    <string name="accommodationString">Accommodation : </string>
+    <string-array name="accommodation_array">
+        <item>Hotel</item>
+        <item>Hostels</item>
+        <item>BackPacker</item>
+        <item>Motel</item>
+        <item>Tent</item>
+        <item>Park</item>
+        <item>Outdoor</item>
+        <item>Friends House</item>
+        <item>Family House</item>
+    </string-array>
+    <string name="theWayString">The Way to go</string>
+    <string name="carString">Car</string>
+    <string name="trainString">Train</string>
+    <string name="airplaneString">Air plane</string>
+    <string name="ticketAvilableString">Do you have ticket?</string>
+    <string name="noString">No</string>
+    <string name="yesString">Yes</string>
+    <string name="askToBuyTicketString">Do you want to buy ticket now?</string>
+    <string name="buyNowString">Buy Now!</string>
+    <string name="saveString">Save</string>
+    <string name="ticketStatusString">Ticket Status</string>
 </resources>
