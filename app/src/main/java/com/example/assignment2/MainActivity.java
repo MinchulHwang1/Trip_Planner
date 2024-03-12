@@ -2,7 +2,9 @@ package com.example.assignment2;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -14,19 +16,28 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.navigation.NavigationView;
 
+import android.os.Bundle;
 import java.util.Objects;
 import android.app.AlertDialog;
 import android.os.Handler;
+import android.view.View;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.Toast;
+import android.widget.EditText;
+import android.content.SharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout dl;
     private ActionBarDrawerToggle t;
     private NavigationView nv;
-
+    private PopupList mPopupList;
+    private SaveList mSaveList;
+    Button button = null;
+    EditText editText = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         nv = findViewById(R.id.nv);
+
+        mPopupList = new PopupList(this);
+        mSaveList = new SaveList(this);
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -48,80 +62,52 @@ public class MainActivity extends AppCompatActivity {
                 String myText = null;
                 if(id == R.id.list) {
                     myText = "Saved List";
-                    showPopupList("Saved List");
+                    mPopupList.showPopupList("Saved List");
                 } else if(id == R.id.weather) {
                     myText = "Weather";
-                    showWeatherPopup();
+                    mPopupList.showWeatherPopup();
                 } else if(id == R.id.News) {
                     myText = "News";
+                    mPopupList.showNewsPopup();
                 } else {
                     return true;
                 }
 //                TODO: Start fragment
                 Bundle args = new Bundle();
                 args.putString("Menu", myText);
-                startMyFragment(args);
+                mPopupList.startMyFragment(args);
 
                 dl.closeDrawers();
                 return true;
             }
 
         });
+        button = (Button) findViewById(R.id.buttonNameId);
 
-
-    }
-
-
-    private void showPopupList(String message) {
-        // 팝업을 생성하고 설정합니다.
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(message);
-
-        // 팝업을 표시합니다.
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-        // 5초 후에 팝업을 닫습니다.
-        new Handler().postDelayed(new Runnable() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                dialog.dismiss();
-            }
-        }, 5000); // 5000 밀리초 = 5초
-    }
+            public void onClick(View v) {                                       // If Button called "Make a Plan!" is clicked
+                editText = findViewById(R.id.nameId);                           // Take EditText references
+                String inputText = editText.getText().toString().trim();        // Take EditText Contents
+                Intent intent = null;
 
-    public void showWeatherPopup() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Current Weather");
-        @SuppressLint("SetJavaScriptEnabled")
-
-        // WebView를 생성하고 설정합니다.
-        WebView webView = new WebView(this);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setDomStorageEnabled(true);
-        //webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-
-        webView.loadUrl("https://weather.com/weather/today/l/c5326b3950212c71c67cee42b213313f555df223d9668aabb44c6719dc67685c");
-
-        // AlertDialog에 WebView를 추가합니다.
-        builder.setView(webView);
-
-        // AlertDialog를 표시합니다.
-        builder.setPositiveButton("close", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss(); // AlertDialog를 닫습니다.
+                // If the editText Widget is empty
+                if(inputText.isEmpty()){
+                    Toast t = Toast.makeText(getApplicationContext(), "Please insert your name.", Toast.LENGTH_SHORT);
+                    t.show();
+                }
+                else{       // If not, then go to next page
+                    mSaveList.saveName(inputText);
+                    intent = new Intent(MainActivity.this, SecondPage.class);
+                    startActivity(intent);
+                }
             }
         });
-        builder.show();
+
     }
 
-    private void startMyFragment(Bundle args ) {
-        MyFragment myFragment = new MyFragment();
-        myFragment.setArguments(args);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.framelayout, myFragment).commit();
-    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -144,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Bundle args = new Bundle();
         args.putString("Menu", myText);
-        startMyFragment(args);
+        mPopupList.startMyFragment(args);
         dl.closeDrawers();
 
         if(t.onOptionsItemSelected(item))
@@ -152,4 +138,21 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
+    /**
+     * Name	    : saveName
+     * Purpose  : To save the name which is insert on editText widget.
+     * Inputs	: String        name        the name user input
+     * Outputs	: NONE
+     * Returns	: Nothing
+     */
+
 }
+
+//    public void saveName(String name) {
+//        DatabaseHelper dbHelper = new DatabaseHelper(this);
+//        dbHelper.insertData(name);
+//    }
