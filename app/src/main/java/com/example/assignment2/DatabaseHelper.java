@@ -12,7 +12,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "my_database";
     private static final int DATABASE_VERSION = 2;
 
-    // 테이블 생성 쿼리
+    // Table query
     public static final String CREATE_TABLE_NAME = "CREATE TABLE my_table (" +
             "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             "name TEXT, " +
@@ -25,6 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "ticketStatus TEXT, " +
             "buyTicketStatus TEXT)";
 
+    // Constructor
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -35,6 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE_NAME);
     }
 
+    //Upgrade Database Table
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // 데이터베이스 업그레이드 시 필요한 작업 수행 (여기서는 단순히 테이블을 삭제하고 다시 생성)
@@ -42,7 +44,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-
+    /**
+     * Name	    : insertData
+     * Purpose  : to insert data to table
+     * Inputs	: a data which is fit on key and value
+     * Outputs	: log messages that each value of each key
+     * Returns	: NONE
+     */
     public void insertData(String name, String fromDate, String toDate, String destination,
                            int people, String accommodation, String transportation,
                            String ticketStatus, String buyTicketStatus) {
@@ -71,6 +79,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * Name	    : getDatabaseContent
+     * Purpose  : to get data which is saved in Database
+     * Inputs	: None
+     * Outputs	: NONE
+     * Returns	: a list of query
+     */
     public String getDatabaseContent() {
         SQLiteDatabase db = this.getReadableDatabase();
         StringBuilder contentBuilder = new StringBuilder();
@@ -110,82 +125,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return contentBuilder.toString();
     }
 
+    /**
+     * Name	    : deleteAllData
+     * Purpose  : to delete all data in Database
+     * Inputs	: None
+     * Outputs	: NONE
+     * Returns	: NONE
+     */
     public void deleteAllData() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete("my_table", null, null);
         db.close();
     }
-    /**
-    // 데이터 추가 메서드
-    public void insertNameData(String name) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("name", name);
-        db.insert("my_table", null, values);
-        db.close();
-    }
-
-    public void insertFromDateData(String selectedFromDate) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("selectedFromDate", selectedFromDate);
-        db.insert("fromDates", null, values);
-        db.close();
-    }
-
-    public void insertToDateData(String selectedToDate) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("selectedToDate", selectedToDate);
-        db.insert("toDates", null, values);
-        db.close();
-    }
-
-    public void insertDeatinationData(String destination) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("destination", destination);
-        db.insert("Destination", null, values);
-        db.close();
-    }
-
-    public void insertPeopleData(int people) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("people", people);
-        db.insert("People", null, values);
-        db.close();
-    }
-
-    public void insertAccommodationData(String accommodation) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("accommodation", accommodation);
-        db.insert("Accommodation", null, values);
-        db.close();
-    }
-
-    public void insertTransportationData(String transportation) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("transportation", transportation);
-        db.insert("Transportation", null, values);
-        db.close();
-    }
-
-    public void insertTicketStatusData(String ticketStatus) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("ticketStatus", ticketStatus);
-        db.insert("TicketStatus", null, values);
-        db.close();
-    }
-
-    public void insertBuyTicketStatusData(String buyTicketStatus) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("buyTicketStatus", buyTicketStatus);
-        db.insert("BuyTicketStatus", null, values);
-        db.close();
-    }*/
 }

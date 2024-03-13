@@ -26,6 +26,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.EditText;
 import android.content.SharedPreferences;
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private SaveList mSaveList;
     Button button = null;
     EditText editText = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,21 +142,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
-    /**
-     * Name	    : saveName
-     * Purpose  : To save the name which is insert on editText widget.
-     * Inputs	: String        name        the name user input
-     * Outputs	: NONE
-     * Returns	: Nothing
-     */
-
 }
 
-//    public void saveName(String name) {
-//        DatabaseHelper dbHelper = new DatabaseHelper(this);
-//        dbHelper.insertData(name);
-//    }

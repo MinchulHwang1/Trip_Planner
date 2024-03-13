@@ -43,7 +43,13 @@ public class SaveList {
         return preferences.getString("Name", "");
     }
 
-
+    /**
+     * Name	    : saveSelectedFromDate
+     * Purpose  : To save the departure date which is selected on Datepicker widget.
+     * Inputs	: String        selectedFromDate        the date user picked
+     * Outputs	: NONE
+     * Returns	: Nothing
+     */
     public void saveSelectedFromDate(String selectedFromDate) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         SharedPreferences.Editor editor = preferences.edit();
@@ -51,6 +57,13 @@ public class SaveList {
         editor.apply();
     }
 
+    /**
+     * Name	    : saveSelectedToDate
+     * Purpose  : To save the arrival date which is selected on Datepicker widget.
+     * Inputs	: String        selectedToDate        the date user picked
+     * Outputs	: NONE
+     * Returns	: Nothing
+     */
     public void saveSelectedToDate(String selectedToDate) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         SharedPreferences.Editor editor = preferences.edit();
@@ -58,6 +71,15 @@ public class SaveList {
         editor.apply();
     }
 
+    /**
+     * Name	    : isValidDate
+     * Purpose  : To check the dates user picked is vaild or not
+     *            It only can be between departure date and arrival date
+     * Inputs	: String        toDate        the date user picked
+     *            String        fromDate      the date user picked
+     * Outputs	: NONE
+     * Returns	: Nothing
+     */
     public boolean isValidDate(String toDate, String fromDate) {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
         try {
@@ -71,6 +93,13 @@ public class SaveList {
         }
     }
 
+    /**
+     * Name	    : saveDestination
+     * Purpose  : To save the destination written down in editText area.
+     * Inputs	: String        destination        the destination written in editText area
+     * Outputs	: NONE
+     * Returns	: Nothing
+     */
     public void saveDestination(String destination) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         SharedPreferences.Editor editor = preferences.edit();
@@ -142,27 +171,63 @@ public class SaveList {
         editor.apply();
     }
 
+    /**
+     * Name	    : loadPeople
+     * Purpose  : To load people number from seek bar
+     * Inputs	: NONE
+     * Outputs	: NONE
+     * Returns	: Value of people
+     */
     public int loadPeople() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         return preferences.getInt("people", 1);
     }
 
+    /**
+     * Name	    : loadAccommodation
+     * Purpose  : To load Accommodation from spinner
+     * Inputs	: NONE
+     * Outputs	: NONE
+     * Returns	: string of Accommodation
+     */
     public String loadAccommodation() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         return preferences.getString("Accommodation", "");
     }
 
+    /**
+     * Name	    : loadSelectedTransportation
+     * Purpose  : To load transportation from radio button
+     * Inputs	: NONE
+     * Outputs	: NONE
+     * Returns	: string of Transportation
+     */
     public String loadSelectedTransportation() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         return preferences.getString("selectedTransportation", "");
     }
 
+    /**
+     * Name	    : saveSelectedTransportation
+     * Purpose  : To Save transportation from radio button
+     * Inputs	: String       selectedTransportation       A string of transportation
+     * Outputs	: NONE
+     * Returns	: Nothing
+     */
     public void saveSelectedTransportation(String selectedTransportation) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("selectedTransportation", selectedTransportation);
         editor.apply();
     }
+
+    /**
+     * Name	    : saveTicketStatus
+     * Purpose  : To Save ticket status from radio button
+     * Inputs	: String        saveTicketStatusString      A string of ticket status
+     * Outputs	: NONE
+     * Returns	: Nothing
+     */
     public void saveTicketStatus(String saveTicketStatusString) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         SharedPreferences.Editor editor = preferences.edit();
@@ -170,6 +235,13 @@ public class SaveList {
         editor.apply();
     }
 
+    /**
+     * Name	    : saveBuyTicketStatus
+     * Purpose  : To Save buy-ticket status from radio button
+     * Inputs	: String        saveBuyTicketStatusString       A string of buy-ticket status
+     * Outputs	: NONE
+     * Returns	: Nothing
+     */
     public void saveBuyTicketStatus(String saveBuyTicketStatusString) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         SharedPreferences.Editor editor = preferences.edit();
@@ -177,11 +249,25 @@ public class SaveList {
         editor.apply();
     }
 
+    /**
+     * Name	    : loadTicketStatus
+     * Purpose  : To load ticket status from radio button
+     * Inputs	: NONE
+     * Outputs	: NONE
+     * Returns	: A string of saveTicketStatus value
+     */
     public String loadTicketStatus() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         return preferences.getString("saveTicketStatus", "");
     }
 
+    /**
+     * Name	    : loadBuyTicketStatus
+     * Purpose  : To load buy-ticket status from radio button
+     * Inputs	: NONE
+     * Outputs	: NONE
+     * Returns	: A string of saveBuyTicketStatus value
+     */
     public String loadBuyTicketStatus() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         return preferences.getString("saveBuyTicketStatus", "");
