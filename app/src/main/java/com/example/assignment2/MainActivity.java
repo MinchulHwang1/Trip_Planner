@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 String myText = null;
                 if(id == R.id.list) {
                     myText = "Saved List";
-                    mPopupList.showPopupList("Saved List");
+                    mPopupList.showPopupList();
                 } else if(id == R.id.weather) {
                     myText = "Weather";
                     mPopupList.showWeatherPopup();

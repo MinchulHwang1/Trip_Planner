@@ -192,7 +192,7 @@ public class FourthPage extends AppCompatActivity {
                 String myText = null;
                 if (id == R.id.list) {
                     myText = "Saved List";
-                    mPopupList.showPopupList("Saved List");
+                    mPopupList.showPopupList();
                 } else if (id == R.id.weather) {
                     myText = "Weather";
                     mPopupList.showWeatherPopup();
@@ -252,17 +252,19 @@ public class FourthPage extends AppCompatActivity {
             Intent intent = null;
             @Override
             public void onClick(View v) {
-                String name = mSaveList.loadName();
-                String fromDate = mSaveList.loadFromDate();
-                String toDate = mSaveList.loadToDate();
-                String destination = mSaveList.loadDestination();
-                int people = mSaveList.loadPeople();
-                String accommodation = mSaveList.loadAccommodation();
-                String transportation = mSaveList.loadSelectedTransportation();
-                String ticketStatus = mSaveList.loadTicketStatus();
-                String buyTicketStatus = mSaveList.loadBuyTicketStatus();
+                String nameDB = mSaveList.loadName();
+                String fromDateDB = mSaveList.loadFromDate();
+                String toDateDB = mSaveList.loadToDate();
+                String destinationDB = mSaveList.loadDestination();
+                int peopleDB = mSaveList.loadPeople();
+                String accommodationDB = mSaveList.loadAccommodation();
+                String transportationDB = mSaveList.loadSelectedTransportation();
+                String ticketStatusDB = mSaveList.loadTicketStatus();
+                String buyTicketStatusDB = mSaveList.loadBuyTicketStatus();
 
-                dbHelper.insertData(name, fromDate, toDate,destination, people, accommodation, transportation, ticketStatus, buyTicketStatus);
+                dbHelper.insertData(nameDB, fromDateDB, toDateDB, destinationDB, peopleDB,
+                        accommodationDB, transportationDB, ticketStatusDB, buyTicketStatusDB);
+
                 /*
                 String selectedTransportation = loadSelectedTransportation();
                 saveSelectedTransportationToDatabase(selectedTransportation);

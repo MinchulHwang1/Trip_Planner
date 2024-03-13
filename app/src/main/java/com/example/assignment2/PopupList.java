@@ -3,8 +3,11 @@ package com.example.assignment2;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -14,6 +17,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 public class PopupList {
     private Context mContext;
 
@@ -21,19 +33,37 @@ public class PopupList {
         mContext = context;
     }
 
-    public void showPopupList(String message) {
+
+    public void showPopupList() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setMessage(message);
+        builder.setTitle("Plan List");
+        @SuppressLint("SetJavaScriptEnabled")
+//
+        DatabaseHelper dbHelper = new DatabaseHelper(mContext);
+        String databaseContent = dbHelper.getDatabaseContent();
+        //dbHelper.deleteAllData();
+        Log.d("DatabaseContent::", databaseContent);
+//
+//        // 팝업 창에 데이터베이스 내용 표시
+        //AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setMessage("\n\nDatabase Content:\n" + databaseContent);
+//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//            }
+//        });
 
-        AlertDialog dialog = builder.create();
-        dialog.show();
 
-        new Handler().postDelayed(new Runnable() {
+
+
+        builder.setPositiveButton("close", new DialogInterface.OnClickListener() {
             @Override
-            public void run() {
+            public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
-        }, 5000); // 5000 milliseconds = 5 seconds
+        });
+        builder.show();
     }
 
     public void showWeatherPopup() {
@@ -70,6 +100,7 @@ public class PopupList {
         return true;
     }
 
+
     public void showNewsPopup() {
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setTitle("CNN News");
@@ -90,5 +121,6 @@ public class PopupList {
         });
         builder.show();
     }
+
 
 }
