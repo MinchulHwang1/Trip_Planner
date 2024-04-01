@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.RadioGroup;
 
 import java.text.ParseException;
@@ -271,5 +272,18 @@ public class SaveList {
     public String loadBuyTicketStatus() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         return preferences.getString("saveBuyTicketStatus", "");
+    }
+
+    public void savedTime(String savedTimeString) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        SharedPreferences.Editor editor = preferences.edit();
+        Log.d( "savedTimefromMethod: ", savedTimeString);
+        editor.putString("savedTime", savedTimeString);
+        editor.apply();
+    }
+
+    public String loadSavedTime() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        return preferences.getString("savedTime", "");
     }
 }

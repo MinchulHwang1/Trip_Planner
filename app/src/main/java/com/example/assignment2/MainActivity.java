@@ -16,7 +16,6 @@ import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.navigation.NavigationView;
 
-import android.os.Bundle;
 import java.util.Objects;
 import android.app.AlertDialog;
 import android.os.Handler;
@@ -31,6 +30,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.EditText;
 import android.content.SharedPreferences;
+
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.ServiceConnection;
+import android.os.IBinder;
+import android.util.Log;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout dl;
@@ -110,9 +116,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.overflow_menu, menu);
@@ -142,5 +145,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
 

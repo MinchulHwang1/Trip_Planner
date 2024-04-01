@@ -10,7 +10,7 @@ import android.util.Log;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "my_database";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Table query
     public static final String CREATE_TABLE_NAME = "CREATE TABLE my_table (" +
@@ -23,7 +23,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "accommodation TEXT, " +
             "transportation TEXT, " +
             "ticketStatus TEXT, " +
-            "buyTicketStatus TEXT)";
+            "buyTicketStatus TEXT, " +
+            "savedTime TEXT)";
 
     // Constructor
     public DatabaseHelper(Context context) {
@@ -53,7 +54,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      */
     public void insertData(String name, String fromDate, String toDate, String destination,
                            int people, String accommodation, String transportation,
-                           String ticketStatus, String buyTicketStatus) {
+                           String ticketStatus, String buyTicketStatus, String savedTime) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -66,6 +67,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("transportation", transportation);
         values.put("ticketStatus", ticketStatus);
         values.put("buyTicketStatus", buyTicketStatus);
+        values.put("savedTime", savedTime);
 
         Log.d("name : ", name);
         Log.d("fromDate : ", fromDate);
@@ -74,6 +76,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.d("people : ", String.valueOf(people));
         Log.d("accommodation : ", accommodation);
         Log.d("transportation : ", transportation);
+        Log.d("savedTime : ", savedTime);
 
         db.insert("my_table", null, values);
         db.close();
@@ -98,11 +101,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 @SuppressLint("Range") String selectedFromDate = cursor.getString(cursor.getColumnIndex("selectedFromDate")); // 수정된 열 이름 사용
                 @SuppressLint("Range") String selectedToDate = cursor.getString(cursor.getColumnIndex("selectedToDate"));     // 수정된 열 이름 사용
                 @SuppressLint("Range") String destination = cursor.getString(cursor.getColumnIndex("destination"));
-                @SuppressLint("Range") String people = cursor.getString(cursor.getColumnIndex("people"));
+                @SuppressLint("Range") int people = cursor.getInt(cursor.getColumnIndex("people"));
                 @SuppressLint("Range") String accommodation = cursor.getString(cursor.getColumnIndex("accommodation"));
                 @SuppressLint("Range") String transportation = cursor.getString(cursor.getColumnIndex("transportation"));
                 @SuppressLint("Range") String ticketStatus = cursor.getString(cursor.getColumnIndex("ticketStatus"));
                 @SuppressLint("Range") String buyTicketStatus = cursor.getString(cursor.getColumnIndex("buyTicketStatus"));
+                @SuppressLint("Range") String savedTime = cursor.getString(cursor.getColumnIndex("savedTime"));
 
                 contentBuilder.append("Name: ").append(name).append("\n");
                 contentBuilder.append("From Date: ").append(selectedFromDate).append("\n"); // 수정된 열 이름 사용
@@ -112,7 +116,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 contentBuilder.append("accommodation: ").append(accommodation).append("\n");
                 contentBuilder.append("transportation: ").append(transportation).append("\n");
                 contentBuilder.append("ticket status: ").append(ticketStatus).append("\n");
-                contentBuilder.append("buy ticket: ").append(buyTicketStatus).append("\n\n\n");
+                contentBuilder.append("buy ticket: ").append(buyTicketStatus).append("\n");
+                contentBuilder.append("saved time: ").append(savedTime).append("\n\n\n");
+
+                Log.d("name 1: ", name);
+                Log.d("fromDate 1: ", selectedFromDate);
+                Log.d("toDate 1: ", selectedToDate);
+                Log.d("destination 1: ", destination);
+                Log.d("people 1: ", String.valueOf(people));
+                Log.d("accommodation 1: ", accommodation);
+                Log.d("transportation 1: ", transportation);
+                Log.d("savedTime 1: ", savedTime);
             }
 
             cursor.close();

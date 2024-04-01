@@ -16,10 +16,15 @@ package com.example.assignment2;
 
 
 import android.annotation.SuppressLint;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebResourceRequest;
@@ -55,6 +60,34 @@ public class FourthPage extends AppCompatActivity {
     private SaveList mSaveList;
 
     private boolean checkActivitedButton = false;
+
+    private MyService myService;
+    private boolean isBound = false;
+
+    private String currentTime = null;
+
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            MyService.LocalBinder binder = (MyService.LocalBinder) service;
+            myService = binder.getService();
+            isBound = true;
+
+            currentTime = myService.getCurrentTime();
+
+            mSaveList.savedTime(currentTime);
+
+            //saveDataWithCurrentTime();
+
+            unbindService(this);
+            isBound = false;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            isBound = false;
+        }
+    };
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -248,10 +281,18 @@ public class FourthPage extends AppCompatActivity {
 
         DatabaseHelper dbHelper;
         dbHelper = new DatabaseHelper(this);
+
         nextButton.setOnClickListener(new View.OnClickListener() {
             Intent intent = null;
             @Override
             public void onClick(View v) {
+
+
+                Intent intent = new Intent(FourthPage.this, MyService.class);
+                bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
+
+
+                // 데이터베이스에 데이터 저장
                 String nameDB = mSaveList.loadName();
                 String fromDateDB = mSaveList.loadFromDate();
                 String toDateDB = mSaveList.loadToDate();
@@ -261,18 +302,13 @@ public class FourthPage extends AppCompatActivity {
                 String transportationDB = mSaveList.loadSelectedTransportation();
                 String ticketStatusDB = mSaveList.loadTicketStatus();
                 String buyTicketStatusDB = mSaveList.loadBuyTicketStatus();
+                String savedTimeDB = mSaveList.loadSavedTime();
+                Log.d("savedTimeDB: ", savedTimeDB);
 
                 dbHelper.insertData(nameDB, fromDateDB, toDateDB, destinationDB, peopleDB,
-                        accommodationDB, transportationDB, ticketStatusDB, buyTicketStatusDB);
-
-                /*
-                String selectedTransportation = loadSelectedTransportation();
-                saveSelectedTransportationToDatabase(selectedTransportation);
+                        accommodationDB, transportationDB, ticketStatusDB, buyTicketStatusDB, savedTimeDB);
 
 
-                String selectedTransportationFromDB = loadSelectedTransportationFromDatabase();
-                Log.d("Database", "Selected Transportation from Database: " + selectedTransportationFromDB);
-*/
                 intent = new Intent(FourthPage.this, FifthPage.class);
                 startActivity(intent);
             }
@@ -289,5 +325,25 @@ public class FourthPage extends AppCompatActivity {
             radioGroup.getChildAt(i).setEnabled(false);
         }
     }
+//
+//    private void saveDataWithCurrentTime() {
+//
+//        DatabaseHelper dbHelper;
+//        dbHelper = new DatabaseHelper(this);
+//
+//        // 데이터베이스에 데이터 저장
+//        String nameDB = mSaveList.loadName();
+//        String fromDateDB = mSaveList.loadFromDate();
+//        String toDateDB = mSaveList.loadToDate();
+//        String destinationDB = mSaveList.loadDestination();
+//        int peopleDB = mSaveList.loadPeople();
+//        String accommodationDB = mSaveList.loadAccommodation();
+//        String transportationDB = mSaveList.loadSelectedTransportation();
+//        String ticketStatusDB = mSaveList.loadTicketStatus();
+//        String buyTicketStatusDB = mSaveList.loadBuyTicketStatus();
+//
+//        dbHelper.insertData(nameDB, fromDateDB, toDateDB, destinationDB, peopleDB,
+//                accommodationDB, transportationDB, ticketStatusDB, buyTicketStatusDB);
+//    }
 
 }
