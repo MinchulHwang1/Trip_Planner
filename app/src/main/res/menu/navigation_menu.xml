@@ -9,4 +9,10 @@
     <item android:id="@+id/News"
         android:icon="@drawable/ic_local_grocery_store_black_24dp"
         android:title="Today's news"/>
+    <item android:id="@+id/Map"
+        android:icon="@drawable/ic_local_grocery_store_black_24dp"
+        android:title="Location"/>
+    <item android:id="@+id/Contacts"
+        android:icon="@drawable/ic_brightness_high_black_24dp"
+        android:title="Contacts"/>
 </menu>

@@ -232,7 +232,11 @@ public class FourthPage extends AppCompatActivity {
                 } else if (id == R.id.News) {
                     myText = "News";
                     mPopupList.showNewsPopup();
-                } else {
+                } else if(id == R.id.Contacts){
+                    myText = "Contacts";
+                    mPopupList.showContact();
+                }
+                else {
                     return true;
                 }
 //                TODO: Start fragment

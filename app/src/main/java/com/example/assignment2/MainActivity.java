@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
     EditText editText = null;
 
 
+    public MyContactInfo myContactInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
 
         nv = findViewById(R.id.nv);
 
+        myContactInfo = new MyContactInfo(this);
+
+        //myContactInfo.addContact("Minchul Hwang", "548-333-4892", "mhwang8858@conestogac.on.ca");
         mPopupList = new PopupList(this);
         mSaveList = new SaveList(this);
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -79,7 +84,14 @@ public class MainActivity extends AppCompatActivity {
                 } else if(id == R.id.News) {
                     myText = "News";
                     mPopupList.showNewsPopup();
-                } else {
+                } else if(id == R.id.Map){
+                    myText = "Map";
+                    mPopupList.showMapPopup();
+                } else if(id == R.id.Contacts){
+                    myText = "Contacts";
+                    mPopupList.showContact();
+                }
+                else {
                     return true;
                 }
 //                TODO: Start fragment
@@ -132,8 +144,8 @@ public class MainActivity extends AppCompatActivity {
         if(id == R.id.weather) {
             myText = "Weather";
 
-        } else if(id == R.id.settings) {
-            myText = "Settings";
+        } else if(id == R.id.Contacts) {
+            myText = "Contacts";
         }
         Bundle args = new Bundle();
         args.putString("Menu", myText);

@@ -11,6 +11,8 @@ import java.util.Locale;
 public class MyService extends Service{
     private final IBinder binder = new LocalBinder();
 
+    public static final String DATA_SAVED = "com.example.assignment2.DATA_SAVED";
+
     // 클라이언트에게 반환할 바인더 클래스 정의
     public class LocalBinder extends Binder {
         MyService getService() {
