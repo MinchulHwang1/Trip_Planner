@@ -223,29 +223,6 @@ public class PopupList {
                 }
             }
         }.execute();
-
-        // this is just I tried to show up as webview
-        /*
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setTitle("CNN News");
-
-        WebView webView = new WebView(mContext);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setDomStorageEnabled(true);
-
-        webView.loadUrl("https://edition.cnn.com/");
-
-        builder.setView(webView);
-
-        builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.show();*/
-
-
     }
 
     public void showContact() {
@@ -290,7 +267,8 @@ public class PopupList {
 
         // MapView를 참조하여 Google 지도 초기화
         MapView mapView = dialogView.findViewById(R.id.map_view);
-        mapView.onCreate(null); // MapView의 라이프사이클 초기화
+        mapView.onCreate(alertDialog.onSaveInstanceState()); // MapView의 라이프사이클 초기화
+        mapView.onResume();
         mapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(@NonNull GoogleMap googleMap) {
@@ -300,77 +278,8 @@ public class PopupList {
 
             }
         });
-    }
-    public void showMakerInfo(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setTitle("Contact");
-        @SuppressLint("SetJavaScriptEnabled")
 
-        StringBuffer contactInfo = fetchContacts();
-        if (contactInfo != null) {
-            builder.setMessage(contactInfo.toString()); // 데이터를 메시지로 설정
-        } else {
-            builder.setMessage("No contact information available"); // 데이터가 없는 경우 대체 메시지 표시
-        }                    // Show all data in Pop-up
-
-        builder.setPositiveButton("close", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.show();
-    }
-
-    @SuppressLint("Range")
-    public StringBuffer fetchContacts() {
-        StringBuffer output = new StringBuffer();
-
-        String phoneNumber = null;
-        String email = null;
-        Uri CONTENT_URI = ContactsContract.Contacts.CONTENT_URI;
-        String _ID = ContactsContract.Contacts._ID;
-        String DISPLAY_NAME = ContactsContract.Contacts.DISPLAY_NAME;
-        String HAS_PHONE_NUMBER = ContactsContract.Contacts.HAS_PHONE_NUMBER;
-        Uri PhoneCONTENT_URI = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-        String Phone_CONTACT_ID = ContactsContract.CommonDataKinds.Phone.CONTACT_ID;
-        String NUMBER = ContactsContract.CommonDataKinds.Phone.NUMBER;
-        Uri EmailCONTENT_URI =  ContactsContract.CommonDataKinds.Email.CONTENT_URI;
-        String EmailCONTACT_ID = ContactsContract.CommonDataKinds.Email.CONTACT_ID;
-        String DATA = ContactsContract.CommonDataKinds.Email.DATA;
-        ContentResolver contentResolver = getContentResolver();
-        Cursor cursor = contentResolver.query(CONTENT_URI, null,null, null, null);
-        // Loop for every contact in the phone
-        if (cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                @SuppressLint("Range") String contact_id = cursor.getString(cursor.getColumnIndex( _ID ));
-                @SuppressLint("Range") String name = cursor.getString(cursor.getColumnIndex( DISPLAY_NAME ));
-                @SuppressLint("Range") int hasPhoneNumber = Integer.parseInt(cursor.getString(cursor.getColumnIndex( HAS_PHONE_NUMBER )));
-                if (hasPhoneNumber > 0) {
-                    output.append("\n First Name:" + name);
-                    // Query and loop for every phone number of the contact
-                    Cursor phoneCursor = contentResolver.query(PhoneCONTENT_URI, null, Phone_CONTACT_ID + " = ?", new String[] { contact_id }, null);
-                    while (phoneCursor.moveToNext()) {
-                        phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(NUMBER));
-                        output.append("\n Phone number:" + phoneNumber);
-                    }
-                    phoneCursor.close();
-                    // Query and loop for every email of the contact
-                    Cursor emailCursor = contentResolver.query(EmailCONTENT_URI,    null, EmailCONTACT_ID+ " = ?", new String[] { contact_id }, null);
-                    while (emailCursor.moveToNext()) {
-                        email = emailCursor.getString(emailCursor.getColumnIndex(DATA));
-                        output.append("\nEmail:" + email);
-                    }
-                    emailCursor.close();
-                }
-                output.append("\n");
-            }
-        }
-
-        return output;
-    }
-    public ContentResolver getContentResolver() {
-        throw new RuntimeException("Stub!");
+        alertDialog.show();
     }
 
 
