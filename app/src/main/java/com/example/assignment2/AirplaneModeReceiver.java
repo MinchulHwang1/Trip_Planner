@@ -13,10 +13,10 @@ public class AirplaneModeReceiver extends BroadcastReceiver {
             boolean isAirplaneModeEnabled = intent.getBooleanExtra("state", false);
             if (isAirplaneModeEnabled) {
                 // 비행기 모드가 활성화되었을 때 수행할 작업
-                Toast.makeText(context, "비행기 모드가 활성화되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Activated Airplane mode.", Toast.LENGTH_SHORT).show();
             } else {
                 // 비행기 모드가 비활성화되었을 때 수행할 작업
-                Toast.makeText(context, "비행기 모드가 비활성화되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Deactivated Airplan mode.", Toast.LENGTH_SHORT).show();
             }
         }
     }
